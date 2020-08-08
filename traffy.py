@@ -3,10 +3,10 @@ from ibm_watson import AssistantV2
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson import ApiException
 
-API_Key='8dwm6jdHdEghcGIc6SULg6BOOkfGGA12ovPOC8hd5gvK'
-Version='2020-08-07'
+API_Key='APT Key'
+Version='YYYY-MM-DD'
 URL='https://api.us-south.assistant.watson.cloud.ibm.com'
-Assistant_ID='23c7e3a3-b5b3-4357-b2f8-d5cd002c316b'
+Assistant_ID='Assistant_ID'
 
 authenticator=IAMAuthenticator(API_Key)
 assistant=AssistantV2(
