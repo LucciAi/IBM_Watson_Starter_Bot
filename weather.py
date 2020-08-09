@@ -1,7 +1,7 @@
 def current_weather_city(City_Name,State_ID,Country_ID):
     import requests, json
 
-    API_Key='dadae7fc5e35d0793f86401976121f5a'
+    API_Key='API_Key'
 
     Base_URL='http://api.openweathermap.org/data/2.5/weather?'
 
@@ -31,7 +31,7 @@ def current_weather_city(City_Name,State_ID,Country_ID):
 def current_weather_zip(Zip_Code,Country_ID):
     import requests, json
 
-    API_Key='dadae7fc5e35d0793f86401976121f5a'
+    API_Key='API_Key'
 
     Base_URL='http://api.openweathermap.org/data/2.5/weather?'
 
