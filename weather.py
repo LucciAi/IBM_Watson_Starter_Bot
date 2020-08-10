@@ -1,73 +1,60 @@
-def current_weather_city(City_Name,State_ID,Country_ID):
-    import requests, json
-
-    API_Key='API_Key'
-
-    Base_URL='http://api.openweathermap.org/data/2.5/weather?'
-
-    Complete_URL=Base_URL + '&q=' + City_Name + ',' + State_ID + ',' + Country_ID + '&appid=' + API_Key
-
-    response=requests.get(Complete_URL)
-
-    weather_response=response.json()
-
-    try:
-        weather_data=weather_response['main']
-        current_temperature_K=round(weather_data['temp'],2)
-        current_temperature_C=round(current_temperature_K-273,2)
-        current_temperature_F=round(1.8*(current_temperature_K-273) + 32,2)
-        current_pressure=round(weather_data['pressure'],2)
-        current_humidiy=round(weather_data['humidity'],2)
-        weather_description=weather_response['weather'][0]['description']
-        print('Temperature (F): ' + str(current_temperature_F))
-        print('Temperature (C): ' + str(current_temperature_C))
-        print('Temperature (K): ' + str(current_temperature_K))
-        print('Pressure (hPa): ' + str(current_pressure))
-        print('Humidity (%): ' + str(current_humidiy))
-        print('Description: ' + str(weather_description))
-    except:
-        print('The city was not found.')
-
-def current_weather_zip(Zip_Code,Country_ID):
-    import requests, json
-
-    API_Key='API_Key'
-
-    Base_URL='http://api.openweathermap.org/data/2.5/weather?'
-
-    Complete_URL=Base_URL + 'zip=' + Zip_Code ',' + Country_ID + '&appid=' + API_Key
-
-    response=requests.get(Complete_URL)
-
-    weather_response=response.json()
-
-    try:
-        weather_data=weather_response['main']
-        current_temperature_K=round(weather_data['temp'],2)
-        current_temperature_C=round(current_temperature_K-273,2)
-        current_temperature_F=round(1.8*(current_temperature_K-273) + 32,2)
-        current_pressure=round(weather_data['pressure'],2)
-        current_humidiy=round(weather_data['humidity'],2)
-        weather_description=weather_response['weather'][0]['description']
-        print('Temperature (F): ' + str(current_temperature_F))
-        print('Temperature (C): ' + str(current_temperature_C))
-        print('Temperature (K): ' + str(current_temperature_K))
-        print('Pressure (hPa): ' + str(current_pressure))
-        print('Humidity (%): ' + str(current_humidiy))
-        print('Description: ' + str(weather_description))
-    except:
-        print('The city was not found.')
-
-def future_weather_city(City_Name,State_ID,Country_ID,Day):
-    import requests, json
-
+import requests,json
+def present_weather(City_Name,Zip_Code,State_ID):
     API_Key='9af3cf2f443d4faea1e866c4e765b2f7'
+    Base_URL='https://api.weatherbit.io/v2.0/current?'
 
+    if City_Name!='00':
+        if State_ID!='00':
+            Complete_URL=Base_URL + 'city=' + City_Name + ',' + State_ID + '&key=' + API_Key
+        else:
+            Complete_URL=Base_URL + 'city=' + City_Name + '&key=' + API_Key
+    elif Zip_Code!='00':
+        Complete_URL=Base_URL + 'postal_code=' + Zip_Code + '&key=' + API_Key
+    elif City_Name!='00' or Zip_Code!='00':
+        Complete_URL=Base_URL + 'postal_code=' + Zip_Code + '&key=' + API_Key
+
+    payload={'key':API_Key,'units':'S'}
+
+    try:
+        response=requests.get(Complete_URL,params=payload)
+        weather_response=response.json()
+        temperature=weather_response['data'][0]['temp']
+        wind=weather_response['data'][0]['wind_spd']
+        rain=weather_response['data'][0]['precip']
+        snow=weather_response['data'][0]['snow']
+        clouds=weather_response['data'][0]['clouds']
+        humidity=weather_response['data'][0]['rh']
+        description=weather_response['data'][0]['weather']['description']
+        return weather_response
+    except:
+        print('Data Not Available')
+
+def future_weather(City_Name,Zip_Code,State_ID,Days):
+    API_Key='9af3cf2f443d4faea1e866c4e765b2f7'
     Base_URL='https://api.weatherbit.io/v2.0/forecast/daily?'
 
-    Complete_URL=Base_URL + 'city=' + City_Name + ',' + State_ID + '&country=' + Country_ID + '&appid=' + API_Key
+    if City_Name!='00':
+        if State_ID!='00':
+            Complete_URL=Base_URL + 'city=' + City_Name + ',' + State_ID + '&key=' + API_Key
+        else:
+            Complete_URL=Base_URL + 'city=' + City_Name + '&key=' + API_Key
+    elif Zip_Code!='00':
+        Complete_URL=Base_URL + 'postal_code=' + Zip_Code + '&key=' + API_Key
+    elif City_Name!='00' or Zip_Code!='00':
+        Complete_URL=Base_URL + 'postal_code=' + Zip_Code + '&key=' + API_Key
 
-    payload={'days':Day}
-    response=requests.get(Complete_URL,params=payload)
-    weather_response=response.json()
-    print(weather_response)
+    payload={'key':API_Key,'units':'S','days':Days}
+
+    try:
+        response=requests.get(Complete_URL,params=payload)
+        weather_response=response.json()
+        temperature=weather_response['data'][0]['temp']
+        wind=weather_response['data'][0]['wind_spd']
+        rain=weather_response['data'][0]['precip']
+        snow=weather_response['data'][0]['snow']
+        clouds=weather_response['data'][0]['clouds']
+        humidity=weather_response['data'][0]['rh']
+        description=weather_response['data'][0]['weather']['description']
+        return weather_response
+    except:
+        print('Data Not Available')

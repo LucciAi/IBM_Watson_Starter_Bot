@@ -1,4 +1,4 @@
-def State_ID(state_name):
+def state(state_name):
     if state_name=='Alabama':
         state_id='AL'
     elif state_name=='Alaska':
@@ -101,5 +101,4 @@ def State_ID(state_name):
         state_id='WI'
     elif state_name=='Wyoming':
         state_id='WY'
-    State_ID=state_id
-    return State_ID
+    return state_id
