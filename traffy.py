@@ -7,10 +7,10 @@ from state import state
 import re
 
 #Obtained From Watson Assistant
-API_Key='8dwm6jdHdEghcGIc6SULg6BOOkfGGA12ovPOC8hd5gvK'
+API_Key='API_Key'
 Version='2020-08-09'
 URL='https://api.us-south.assistant.watson.cloud.ibm.com'
-Assistant_ID='23c7e3a3-b5b3-4357-b2f8-d5cd002c316b'
+Assistant_ID='Assistant_ID'
 
 #Authentication
 authenticator=IAMAuthenticator(API_Key)
