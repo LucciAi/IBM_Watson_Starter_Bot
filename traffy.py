@@ -1,16 +1,16 @@
-import requests,json
+import requests,json,re
 from ibm_watson import AssistantV2,ApiException
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-from weather import present_weather,future_weather
 from datetime import datetime,timedelta
+from weather import present_weather,future_weather
+from PIL import Image
 from state import state
-import re
 
 #Obtained From Watson Assistant
-API_Key='API_Key'
+API_Key='8dwm6jdHdEghcGIc6SULg6BOOkfGGA12ovPOC8hd5gvK'
 Version='2020-08-09'
 URL='https://api.us-south.assistant.watson.cloud.ibm.com'
-Assistant_ID='Assistant_ID'
+Assistant_ID='23c7e3a3-b5b3-4357-b2f8-d5cd002c316b'
 
 #Authentication
 authenticator=IAMAuthenticator(API_Key)
@@ -23,11 +23,10 @@ assistant=AssistantV2(
 assistant.set_service_url(URL)
 
 #Create Session ID
-response=assistant.create_session(
+session_response=assistant.create_session(
     assistant_id=Assistant_ID
 ).get_result()
 
-session_response=json.loads(json.dumps(response,indent=2))
 Session_ID=session_response['session_id'] #Store Session ID
 
 #Start Conversation
@@ -38,7 +37,7 @@ while message_input!='quit': #Exit Conversation
         message_input=input('Message: ') #Input Message
 
         #Recieve Response
-        watson_response=assistant.message(
+        message_response=assistant.message(
             assistant_id=Assistant_ID,
             session_id=Session_ID,
             input={
@@ -47,8 +46,7 @@ while message_input!='quit': #Exit Conversation
                 }
         ).get_result()
 
-        message_response=json.loads(json.dumps(watson_response,indent=2)) #Format Response
-        print(json.dumps(watson_response,indent=2))
+        #print(json.dumps(message_response,indent=2))
         message_return=message_response['output']['generic'][0]['text'] #Return Message
         print(message_return) #Print Message
         if len(message_response['output']['intents'])!=0:
@@ -87,16 +85,47 @@ while message_input!='quit': #Exit Conversation
                         state_id=state_id
                     else:
                         state_id='00'
-                    print('City Name: ' + city_name)
-                    print('Zip Code: ' + zip_code)
-                    print('State ID: ' + state_id)
                     try:
                         if 'days' in locals() or 'days' in globals():
                             weather_response=future_weather(city_name,zip_code,state_id,days)
-                            print(weather_response)
+                            date=str(weather_response['data'][0]['valid_date'])
+                            temperature=str(weather_response['data'][0]['temp'])
+                            wind=str(weather_response['data'][0]['wind_spd'])
+                            rain=str(weather_response['data'][0]['precip'])
+                            snow=str(weather_response['data'][0]['snow'])
+                            clouds=str(weather_response['data'][0]['clouds'])
+                            humidity=str(weather_response['data'][0]['rh'])
+                            description=weather_response['data'][0]['weather']['description']
+                            icon=weather_response['data'][0]['weather']['icon']
+                            print('Date: ' + date)
+                            print('Temperature: ' + temperature + 'K')
+                            print('Wind: ' + wind + 'm/s')
+                            print('Rain: ' + rain + 'mm/hr')
+                            print('Snow: ' + snow + 'mm/hr')
+                            print('Clouds: ' + clouds + '%')
+                            print('Humidity: ' + humidity + '%')
+                            print('Description: ' + description)
+                            image=Image.open(icon + '.png')
+                            image.show()
                         else:
                             weather_response=present_weather(city_name,zip_code,state_id)
-                            print(weather_response)
+                            temperature=str(weather_response['data'][0]['temp'])
+                            wind=str(weather_response['data'][0]['wind_spd'])
+                            rain=str(weather_response['data'][0]['precip'])
+                            snow=str(weather_response['data'][0]['snow'])
+                            clouds=str(weather_response['data'][0]['clouds'])
+                            humidity=str(weather_response['data'][0]['rh'])
+                            description=weather_response['data'][0]['weather']['description']
+                            icon=weather_response['data'][0]['weather']['icon']
+                            print('Temperature: ' + temperature + 'K')
+                            print('Wind: ' + wind + 'm/s')
+                            print('Rain: ' + rain + 'mm/hr')
+                            print('Snow: ' + snow + 'mm/hr')
+                            print('Clouds: ' + clouds + '%')
+                            print('Humidity: ' + humidity + '%')
+                            print('Description: ' + description)
+                            image=Image.open(icon + '.png')
+                            image.show()
                     except:
                         continue
                     if 'days' in locals() or 'days' in globals():

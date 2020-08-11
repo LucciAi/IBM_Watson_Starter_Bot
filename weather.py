@@ -1,6 +1,6 @@
 import requests,json
 def present_weather(City_Name,Zip_Code,State_ID):
-    API_Key='API_Key'
+    API_Key='9af3cf2f443d4faea1e866c4e765b2f7'
     Base_URL='https://api.weatherbit.io/v2.0/current?'
 
     if City_Name!='00':
