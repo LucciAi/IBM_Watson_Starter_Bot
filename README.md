@@ -27,4 +27,5 @@ These files include the basic framework for a IBM Watson Assistant API integrati
   *Example:* If my folder is named "Traffy" and is in the "Documents" folder, I run *cd Documents* then *cd Traffy*.
 
   If the current directory is unknown run *ls* to get a list of folders.
+
 3) Run *python3 traffy.py*
