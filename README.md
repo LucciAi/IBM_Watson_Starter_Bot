@@ -10,3 +10,17 @@ These files include the basic framework for a IBM Watson Assistant API integrati
 ### In The Works
 - An API call that connects people with organizations in the US using charitynatvigator.org, the nation's largest nonprofit evaluator...
 - An implementation of Traffy into a GUI using Kivy...
+- An update to the range of responses to the user...
+
+### Usage Instructions
+**Downloading**
+1) Download and unzip all the files into one folder
+4) Move all the images in the Icons folder into the main folder
+5) Delete the empty Icons folder
+**Running**
+1) Open the terminal
+2) Go to the folder with all the files using the *cd [folder]* command
+  **Note:** This command is necessary for every directory level
+  *Example:* If my folder is named "Traffy" and is in the "Documents" folder, I run *cd Documents* then *cd Traffy*
+  If the current directory is unknown run *ls* to get a list of folders
+3) Run *python3 traffy.py*
