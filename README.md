@@ -22,10 +22,10 @@ These files include the basic framework for a IBM Watson Assistant API integrati
 1) Open the terminal
 2) Go to the folder with all the files using the *cd [folder]* command
 
-  **Note:** This command is necessary for every directory level.
+  - **Note:** This command is necessary for every directory level.
 
-  *Example:* If my folder is named "Traffy" and is in the "Documents" folder, I run *cd Documents* then *cd Traffy*.
+  - *Example:* If my folder is named "Traffy" and is in the "Documents" folder, I run *cd Documents* then *cd Traffy*.
 
-  If the current directory is unknown run *ls* to get a list of folders.
+  - If the current directory is unknown run *ls* to get a list of folders.
 
 3) Run *python3 traffy.py*
