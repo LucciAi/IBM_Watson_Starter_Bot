@@ -17,6 +17,7 @@ These files include the basic framework for a IBM Watson Assistant API integrati
 1) Download and unzip all the files into one folder
 4) Move all the images in the Icons folder into the main folder
 5) Delete the empty Icons folder
+
 **Running**
 1) Open the terminal
 2) Go to the folder with all the files using the *cd [folder]* command
