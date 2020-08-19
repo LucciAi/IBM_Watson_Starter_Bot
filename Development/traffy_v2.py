@@ -7,7 +7,6 @@ from weather_v2 import weather
 from state import state
 from zip import zip
 
-#Obtained From Watson Assistant
 API_Key='8dwm6jdHdEghcGIc6SULg6BOOkfGGA12ovPOC8hd5gvK'
 Version='2020-08-09'
 URL='https://api.us-south.assistant.watson.cloud.ibm.com'
@@ -20,24 +19,22 @@ assistant=AssistantV2(
     authenticator=authenticator
 )
 
-#Set URL
-assistant.set_service_url(URL)
+assistant.set_service_url(URL) #Sets URL
 
-#Create Session ID
+#Creates Session ID
 session_response=assistant.create_session(
     assistant_id=Assistant_ID
 ).get_result()
 
-Session_ID=session_response['session_id'] #Store Session ID
+Session_ID=session_response['session_id'] #Stores Session ID
 
-#Start Conversation
 message_input='start_session' #Initial Message Input
 
-while message_input!='quit': #Exit Conversation
+while message_input!='quit': #Exits Conversation
     try:
         message_input=input('Message: ') #Input Message
 
-        #Recieve Response
+        #Recieves Response
         message_response=assistant.message(
             assistant_id=Assistant_ID,
             session_id=Session_ID,
@@ -48,12 +45,14 @@ while message_input!='quit': #Exit Conversation
         ).get_result()
 
         #print(json.dumps(message_response,indent=2))
+
+        #Returns Message
         if len(message_response['output']['generic'])!=0:
-            message_return=message_response['output']['generic'][0]['text'] #Return Message
-            print(message_return) #Print Message
+            message_return=message_response['output']['generic'][0]['text']
+            print(message_return)
         if len(message_response['output']['intents'])!=0:
             if message_response['output']['intents'][0]['intent']=='Weather':
                 weather(message_response)
     except ApiException as ex:
-        print('Method failed with status code ' + str(ex.code) + ': ' + ex.message) #Print Error Code
+        print('Method failed with status code ' + str(ex.code) + ': ' + ex.message) #Prints Error Code
         continue
