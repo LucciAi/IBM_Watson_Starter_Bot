@@ -6,6 +6,7 @@ These files include the basic framework for a IBM Watson Assistant API integrati
 
 ### API Calls
 - A weather API from weatherbit.io could be called for current or forecasted weather in the US.
+- A IP address API from ipdata.co is used to find the current location and/or timezone.
 
 ### In The Works
 - An organization of individual API calls into separate functions without any significant specialized code in traffy.py...
