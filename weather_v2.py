@@ -2,6 +2,7 @@ import requests,json,re,pytz
 from datetime import datetime,timedelta
 from state import state
 from zip import zip
+from ip import ip
 def weather(message_response):
     #Extracts Data
     for i in range(len(message_response['output']['entities'])):
@@ -23,6 +24,9 @@ def weather(message_response):
             state_id=state(state_name) #Converts To State ID
         #Extracts Date
         if message_response['output']['entities'][i]['entity']=='sys-date':
+            #Obtains Timezone
+            timezone,_=ip()
+            #Extracts Data
             forecast_date=message_response['output']['entities'][i]['value'] #Formats Forecast Date
             forecast_date=datetime.strptime(forecast_date,'%Y-%m-%d')
             #Obtains Current Time in UTC
@@ -77,8 +81,8 @@ def weather(message_response):
         else:
             Complete_URL=Base_URL + 'city=' + city_name + '&key=' + API_Key
     else:
-        print('Too Little Information!')
-        return
+        _,zip_code=ip()
+        Complete_URL=Base_URL + 'postal_code=' + zip_code + '&key=' + API_Key
 
     try:
         response=requests.get(Complete_URL,params=payload) #Sends Request
@@ -93,7 +97,6 @@ def weather(message_response):
         else:
             i=0
             date=str(weather_response['data'][i]['datetime'])[0:10]
-        print(i)
         temp_K=round(weather_response['data'][i]['temp'],2)
         temp_C=round(temp_K-273.15,2)
         temp_F=round(temp_C*9/5+32,2)
